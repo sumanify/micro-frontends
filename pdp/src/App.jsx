@@ -1,18 +1,19 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 
+import SafeComponent from "./SafeComponent";
 import "./index.scss";
-const Header = React.lazy(() => import("home/Header"));
+import Header from "home/Header";
 import Footer from "home/Footer";
 
 const App = () => (
   <div className="mt-10 text-3xl mx-auto max-w-6xl">
-    <Suspense fallback={<div>Loading...</div>}>
+    <SafeComponent>
       <Header />
-    </Suspense>
-    <main class="container mx-auto px-4 py-8">
-      <h2 class="text-2xl font-bold mb-4">Welcome to my website!</h2>
-      <p class="mb-4"> Page content </p>
+    </SafeComponent>
+    <main className="container mx-auto px-4 py-8">
+      <h2 className="text-2xl font-bold mb-4">Welcome to my website!</h2>
+      <p className="mb-4"> Page content </p>
     </main>
     <Footer />
   </div>
