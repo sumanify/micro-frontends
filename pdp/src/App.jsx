@@ -1,21 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import SafeComponent from "./SafeComponent";
 import "./index.scss";
 import Header from "home/Header";
 import Footer from "home/Footer";
+import PDPContent from "./components/PDPContent";
 
 const App = () => (
-  <div className="mt-10 text-3xl mx-auto max-w-6xl">
-    <SafeComponent>
-      <Header />
-    </SafeComponent>
-    <main className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-4">Welcome to my website!</h2>
-      <p className="mb-4"> Page content </p>
-    </main>
-    <Footer />
-  </div>
+  <BrowserRouter>
+    <div className="mt-10 text-3xl mx-auto max-w-6xl">
+      <SafeComponent>
+        <Header app={{ name: "Product" }} />
+      </SafeComponent>
+      <Routes>
+        <Route path="/product/:id" element={<PDPContent />} />
+      </Routes>
+      <Footer />
+    </div>
+  </BrowserRouter>
 );
+
 ReactDOM.render(<App />, document.getElementById("app"));
