@@ -1,13 +1,14 @@
 import {
-  Body,
   Controller,
-  Delete,
   Get,
-  Post,
   Request,
   UseGuards,
+  Post,
+  Body,
+  Delete,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
+
 import products, { Product } from '../../products';
 
 interface CartItem extends Product {
@@ -19,7 +20,10 @@ interface Cart {
 }
 
 const initialCart = (indexes: number[]): Cart => ({
-  cartItems: indexes.map((index) => ({ ...products[index], quantity: 1 })),
+  cartItems: indexes.map((index) => ({
+    ...products[index],
+    quantity: 1,
+  })),
 });
 
 @Controller('cart')
@@ -41,15 +45,17 @@ export class CartController {
   @UseGuards(JwtAuthGuard)
   async create(@Request() req, @Body() { id }: { id: string }): Promise<Cart> {
     const cart = this.carts[req.user.userId];
-
-    const cartItem = cart.cartItems.find((item) => item.id === parseInt(id));
-
+    const cartItem = cart.cartItems.find(
+      (cartItem) => cartItem.id === parseInt(id),
+    );
     if (cartItem) {
-      cartItem.quantity++;
+      cartItem.quantity += 1;
     } else {
-      cart.cartItems.push({ ...products[parseInt(id)], quantity: 1 });
+      cart.cartItems.push({
+        ...products.find((product) => product.id === parseInt(id)),
+        quantity: 1,
+      });
     }
-
     return cart;
   }
 
