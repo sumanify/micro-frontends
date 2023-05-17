@@ -1,3 +1,3 @@
 # micro-frontends
 
-Mini apps to check how micro frontend works
+E-commerce app with micro frontends
